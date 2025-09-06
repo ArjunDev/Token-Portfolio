@@ -1,4 +1,5 @@
 import React from 'react'
+import MyPieChart from '../pie-chart';
 
 const PortfolioTotalChart = () => {
   return (
@@ -7,12 +8,10 @@ const PortfolioTotalChart = () => {
 
       <h3 className='text-[rgba(161,161,170,1)] font-medium flex'>Portfolio Total</h3>
 
-      <div className='flex flex-col justify-center items-center w-full gap-[10px] lg:flex-row'>
+      <div className='flex flex-col justify-center items-center w-full gap-[20px] lg:flex-row'>
 
         {/* Chart */}
-        <div className='h-full w-full flex items-center justify-center'>
-          <div className='bg-amber-400 flex items-center justify-center h-[236px] w-[236px] rounded-full border-1 border-[rgba(255,255,255,1)] lg:w-[160px] lg:h-[160px]'>Pie Chart</div>
-        </div>
+        <MyPieChart/>
 
         {/* Rows */}
         <div className='h-[200px] w-full flex flex-col justify-between items-between'>
