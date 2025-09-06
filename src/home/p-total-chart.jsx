@@ -3,7 +3,7 @@ import React from 'react'
 const PortfolioTotalChart = () => {
   return (
 
-    <div className="w-[354px] h-[496px] flex justify-center items-start gap-5 lg:h-full lg:w-[658.5px] lg:flex-col lg:justify-start">
+    <div className="w-[354px] h-[496px] flex flex-col justify-center items-start gap-5 lg:h-full lg:w-[658.5px] lg:justify-start">
 
       <h3 className='text-[rgba(161,161,170,1)] font-medium flex'>Portfolio Total</h3>
 

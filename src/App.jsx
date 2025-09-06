@@ -6,7 +6,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className='bg-[rgba(35,35,35,1)] min-h-screen min-w-screen flex justify-center items-start'>
+    <div className='bg-[rgba(35,35,35,1)] flex justify-center items-start w-full h-full'>
       <Home/>
     </div>
   )
