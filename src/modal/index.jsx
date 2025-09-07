@@ -2,21 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useCustomFetch } from "../utilities/customFetch";
 import StarIcon from "@mui/icons-material/Star";
 
-const CustomModal = ({ isOpen, onClose }) => {
-
-   if (!isOpen) return null;
+const CustomModal = ({ isOpen, onClose, onAdd }) => {
+  if (!isOpen) return null;
 
   const { data, loading, error, refetch } = useCustomFetch();
   const [selectedCoins, setSelectedCoins] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [disableAddWatchlistBtn, setDisableAddWatchlistBtn] = useState(true);
 
-  useEffect(()=>{
-    if(selectedCoins.length > 0){
+  useEffect(() => {
+    if (selectedCoins.length > 0) {
       setDisableAddWatchlistBtn(false);
     } else setDisableAddWatchlistBtn(true);
-    // console.log(selectedCoins)
-  }, [selectedCoins.length])
+  }, [selectedCoins]);
 
   useEffect(() => {
     if (isOpen) {
@@ -36,9 +34,10 @@ const CustomModal = ({ isOpen, onClose }) => {
 
   // Filter coins by search term
   const filteredCoins =
-    data?.coins?.filter((coin) =>
-      coin.item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      coin.item.symbol.toLowerCase().includes(searchTerm.toLowerCase())
+    data?.coins?.filter(
+      (coin) =>
+        coin.item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        coin.item.symbol.toLowerCase().includes(searchTerm.toLowerCase())
     ) || [];
 
   return (
@@ -76,7 +75,9 @@ const CustomModal = ({ isOpen, onClose }) => {
               <div
                 key={idx}
                 className={`text-white text-xs py-1 flex justify-between items-center gap-2 rounded-lg cursor-pointer transition-colors ${
-                  isSelected ? "bg-[rgba(169,232,81,0.15)]" : "hover:bg-[rgba(169,232,81,0.06)]"
+                  isSelected
+                    ? "bg-[rgba(169,232,81,0.15)]"
+                    : "hover:bg-[rgba(169,232,81,0.06)]"
                 }`}
                 onClick={() => toggleSelect(coin)}
               >
@@ -114,11 +115,17 @@ const CustomModal = ({ isOpen, onClose }) => {
 
         {/* Footer Button */}
         <div className="flex justify-end items-end p-2">
-            <button
-              className={`flex justify-center items-center px-4 rounded-lg h-8 w-max text-xs ${disableAddWatchlistBtn ? 'rgba(161,161,170,1) border border-[rgba(161,161,170,0.5)] text-[rgba(161,161,170,0.5)] hover:cursor-not-allowed' : 'bg-[rgba(169,232,1,1)] hover:cursor-pointer'}`}
-              disabled={disableAddWatchlistBtn}
-              onClick={() => console.log("Add to Wishlist:", selectedCoins)}
-            >Add to Watchlist ({selectedCoins.length})</button>
+          <button
+            className={`flex justify-center items-center px-4 rounded-lg h-8 w-max text-xs ${
+              disableAddWatchlistBtn
+                ? "border border-[rgba(161,161,170,0.5)] text-[rgba(161,161,170,0.5)] hover:cursor-not-allowed"
+                : "bg-[rgba(169,232,1,1)] hover:cursor-pointer"
+            }`}
+            disabled={disableAddWatchlistBtn}
+            onClick={() => onAdd(selectedCoins)} // send to parent
+          >
+            Add to Watchlist ({selectedCoins.length})
+          </button>
         </div>
       </div>
     </div>

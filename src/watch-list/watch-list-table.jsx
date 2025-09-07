@@ -1,20 +1,11 @@
-import React, { useState } from 'react'
+import React from "react";
+import { useSelector } from "react-redux";
 
 const WatchListTable = () => {
-const data = [
-  ["R1C1", "R1C2", "R1C3", "R1C4", "R1C5", "R1C6", "R1C7"],
-  ["R2C1", "R2C2", "R2C3", "R2C4", "R2C5", "R2C6", "R2C7"],
-  ["R3C1", "R3C2", "R3C3", "R3C4", "R3C5", "R3C6", "R3C7"],
-  ["R4C1", "R4C2", "R4C3", "R4C4", "R4C5", "R4C6", "R4C7"],
-  ["R5C1", "R5C2", "R5C3", "R5C4", "R5C5", "R5C6", "R5C7"],
-  ["R6C1", "R6C2", "R6C3", "R6C4", "R6C5", "R6C6", "R6C7"],];
-
-  const [APIData, setAPIData] = useState(data);
-  
+  const data = useSelector((state) => state.watchlist.items); // get from store
 
   return (
-    <div className='flex flex-col justify-center items-start w-full h-auto border-[rgba(161,161,170,0.3)] border rounded-lg overflow-x-scroll lg:overflow-hidden'>
-
+    <div className="flex flex-col justify-center items-start w-full h-auto border-[rgba(161,161,170,0.3)] border rounded-lg overflow-x-scroll lg:overflow-hidden">
       <table className="h-auto border-collapse w-[1384px]">
         <thead>
           <tr className="text-[rgba(161,161,170,1)] text-sm bg-[rgba(39,39,42,1)] h-12 w-[209.9px] lg:w-[206px]">
@@ -27,40 +18,95 @@ const data = [
             <th className="px-4 py-2 text-right"></th>
           </tr>
         </thead>
-        <tbody className='border-t border-b border-[rgba(161,161,170,0.3)]'>
-        {(APIData.length > 0) && APIData.map((row, rowIndex) => (
-          <tr
-            key={rowIndex}
-            className="text-sm p-3 h-12"
-          >{row.map((cell, colIndex) => (
-              <td
-                key={colIndex}
-                className={`px-4 py-2 ${
-                  colIndex === 6
-                    ? "text-right text-[rgba(244,244,245,1)]"
-                    : "text-left text-[rgba(161,161,170,1)]"
-                }`}
-              >{cell}</td>
-            ))}
-          </tr>
-         ))}
-        </tbody>
+        <tbody className="border-t border-b border-[rgba(161,161,170,0.3)]">
+          {data.length > 0 &&
+            data.map((coin, index) => {
+              const price = coin?.data?.price ?? 0;
+              const change24h =
+                coin?.data?.price_change_percentage_24h?.usd ?? 0;
 
+              return (
+                <tr key={index} className="text-sm p-3 h-12">
+                  {/* Token */}
+                  <td className="px-4 py-2 flex items-center gap-2 text-[rgba(244,244,245,1)]">
+                    <img
+                      src={coin.small}
+                      alt={coin.name}
+                      className="w-6 h-6 rounded-full"
+                    />
+                    <div className="flex flex-col">
+                      <span className="font-medium">{coin.name}</span>
+                      <span className="text-xs text-gray-400 uppercase">
+                        {coin.symbol}
+                      </span>
+                    </div>
+                  </td>
+
+                  {/* Price */}
+                  <td className="px-4 py-2 text-left text-[rgba(244,244,245,1)]">
+                    ${price.toFixed(3)}
+                  </td>
+
+                  {/* 24h % */}
+                  <td
+                    className={`px-4 py-2 text-left ${
+                      change24h >= 0 ? "text-green-400" : "text-red-400"
+                    }`}
+                  >
+                    {change24h.toFixed(2)}%
+                  </td>
+
+                  {/* Sparkline */}
+                  <td className="px-4 py-2 text-left text-gray-400">
+                    {coin.data.sparkline ? (
+                      <img
+                        src={coin.data.sparkline}
+                        alt={`${coin.name} sparkline`}
+                        className="w-24 h-6"
+                      />
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+
+                  {/* Holdings */}
+                  <td className="px-4 py-2 text-left text-gray-400">0</td>
+
+                  {/* Value */}
+                  <td className="px-4 py-2 text-left text-gray-400">0</td>
+
+                  {/* Actions */}
+                  <td className="px-4 py-2 text-right text-[rgba(244,244,245,1)]">
+                    <button aria-label={`More options for ${coin.name}`}>
+                      ...
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+        </tbody>
       </table>
 
       {/* table footer with pagination */}
-      <div className='flex justify-between items-center w-full h-[60px] p-4'>
+      <div className="flex justify-between items-center w-full h-[60px] p-4">
+        <span className="text-[rgba(161,161,170,1)] text-sm">
+          {data.length} of {data.length} results
+        </span>
 
-        <span className="text-[rgba(161,161,170,1)] text-sm">10 of 100 results</span>
-
-        <div className='flex justify-between items-center gap-4'>
-          <span className='text-sm p-1 text-[rgba(161,161,170,1)]'>10 of 10 Pages</span>
-          <button className='text-[rgba(161,161,170,1)] text-sm p-1'>Prev</button>
-          <button className='text-[rgba(161,161,170,1)] text-sm p-1'>Next</button>
+        <div className="flex justify-between items-center gap-4">
+          <span className="text-sm p-1 text-[rgba(161,161,170,1)]">
+            1 of 1 Pages
+          </span>
+          <button className="text-[rgba(161,161,170,1)] text-sm p-1">
+            Prev
+          </button>
+          <button className="text-[rgba(161,161,170,1)] text-sm p-1">
+            Next
+          </button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default WatchListTable;
