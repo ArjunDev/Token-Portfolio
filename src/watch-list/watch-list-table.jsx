@@ -1,10 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import HoldingsCell from "./holding-cell";
 
 const WatchListTable = () => {
   const data = useSelector((state) => state.watchlist.items); // get from store
+  const dispatch = useDispatch();
 
-  console.log(data)
   return (
     <div className="flex flex-col justify-center items-start w-full h-auto border-[rgba(161,161,170,0.3)] border rounded-lg overflow-x-scroll lg:overflow-hidden">
       <table className="h-auto border-collapse w-[1384px]">
@@ -20,7 +21,6 @@ const WatchListTable = () => {
           </tr>
         </thead>
         <tbody className="border-t border-b border-[rgba(161,161,170,0.3)]">
-
           {data?.length > 0 &&
             data.map((coin, index) => {
               return (
@@ -33,7 +33,12 @@ const WatchListTable = () => {
                       className="w-6 h-6 rounded-full"
                     />
                     <div className="flex flex-col">
-                      <span className="font-medium">{coin.name} <span className="text-[rgba(161,161,170,1)]">({coin.symbol})</span></span>
+                      <span className="font-medium">
+                        {coin.name}{" "}
+                        <span className="text-[rgba(161,161,170,1)]">
+                          ({coin.symbol})
+                        </span>
+                      </span>
                     </div>
                   </td>
 
@@ -47,7 +52,9 @@ const WatchListTable = () => {
                     className={`px-4 py-2 text-left ${
                       coin.change24h >= 0 ? "text-green-400" : "text-red-400"
                     }`}
-                  >{coin.change24h.toFixed(2)}%</td>
+                  >
+                    {coin.change24h.toFixed(2)}%
+                  </td>
 
                   {/* Sparkline */}
                   <td className="px-4 py-2 text-left text-gray-400">
@@ -56,20 +63,25 @@ const WatchListTable = () => {
                         src={coin.sparkline}
                         alt={`${coin.name} sparkline`}
                         className="w-24 h-6"
-                      />) : ("-")}
+                      />
+                    ) : (
+                      "-"
+                    )}
                   </td>
 
-                  {/* Holdings */}
-                  <td className="px-4 py-2 text-left text-gray-400">0</td>
+                  {/* Holdings with Save button */}
+                  <td className="px-4 py-2 text-left text-gray-400">
+                    <HoldingsCell coin={coin} />
+                  </td>
 
                   {/* Value */}
-                  <td className="px-4 py-2 text-left text-gray-400">0</td>
+                  <td className="px-4 py-2 text-left text-gray-400">
+                    ${coin.value ? coin.value.toFixed(2) : "0.00"}
+                  </td>
 
                   {/* Actions */}
                   <td className="px-4 py-2 text-right text-[rgba(244,244,245,1)]">
-                    <button aria-label={`More options for ${coin.name}`}>
-                      ...
-                    </button>
+                    <button aria-label={`More options for ${coin.name}`}>...</button>
                   </td>
                 </tr>
               );

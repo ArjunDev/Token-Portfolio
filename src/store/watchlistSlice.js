@@ -1,8 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 // Load from localStorage if available
+const stored = JSON.parse(localStorage.getItem("watchlist"));
+
 const initialState = {
-  items: JSON.parse(localStorage.getItem("watchlist")) || [],
+  items: stored?.items || [],
+  lastUpdated: stored?.lastUpdated || "",
+};
+
+const saveToLocalStorage = (state) => {
+  localStorage.setItem("watchlist",JSON.stringify(
+    {
+      items: state.items,
+      lastUpdated: state.lastUpdated,
+    }));
 };
 
 const watchlistSlice = createSlice({
@@ -11,23 +22,50 @@ const watchlistSlice = createSlice({
   reducers: {
     setWatchlist: (state, action) => {
       state.items = action.payload;
-      localStorage.setItem("watchlist", JSON.stringify(state.items));
+
+      saveToLocalStorage(state);
     },
     addToWatchlist: (state, action) => {
       state.items.push(action.payload);
-      localStorage.setItem("watchlist", JSON.stringify(state.items));
+
+      state.lastUpdated = new Date().toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      });
+
+      saveToLocalStorage(state);
     },
     removeFromWatchlist: (state, action) => {
       state.items = state.items.filter((coin) => coin.id !== action.payload);
-      localStorage.setItem("watchlist", JSON.stringify(state.items));
+
+      // update lastUpdated
+      state.lastUpdated = new Date().toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      });
+
+      saveToLocalStorage(state);
     },
     updateHoldings: (state, action) => {
       const { id, holdings } = action.payload;
       const coin = state.items.find((c) => c.id === id);
+
       if (coin) {
         coin.holdings = holdings;
         coin.value = holdings * coin.price;
-        localStorage.setItem("watchlist", JSON.stringify(state.items));
+
+        // update lastUpdated
+        state.lastUpdated = new Date().toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        });
+        saveToLocalStorage(state);
       }
     },
   },
