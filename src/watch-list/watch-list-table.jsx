@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 const WatchListTable = () => {
   const data = useSelector((state) => state.watchlist.items); // get from store
 
+  console.log(data)
   return (
     <div className="flex flex-col justify-center items-start w-full h-auto border-[rgba(161,161,170,0.3)] border rounded-lg overflow-x-scroll lg:overflow-hidden">
       <table className="h-auto border-collapse w-[1384px]">
@@ -22,44 +23,37 @@ const WatchListTable = () => {
 
           {data?.length > 0 &&
             data.map((coin, index) => {
-              const price = coin?.data?.price ?? 0;
-              const change24h =
-                coin?.data?.price_change_percentage_24h?.usd ?? 0;
-
               return (
                 <tr key={index} className="text-sm p-3 h-12">
                   {/* Token */}
                   <td className="px-4 py-2 flex items-center gap-2 text-[rgba(244,244,245,1)]">
                     <img
-                      src={coin.small}
+                      src={coin.image}
                       alt={coin.name}
                       className="w-6 h-6 rounded-full"
                     />
                     <div className="flex flex-col">
-                      <span className="font-medium">{coin.name}</span>
-                      <span className="text-xs text-gray-400 uppercase">
-                        {coin.symbol}
-                      </span>
+                      <span className="font-medium">{coin.name} <span className="text-[rgba(161,161,170,1)]">({coin.symbol})</span></span>
                     </div>
                   </td>
 
                   {/* Price */}
                   <td className="px-4 py-2 text-left text-[rgba(244,244,245,1)]">
-                    ${price.toFixed(3)}
+                    ${coin.price.toFixed(2)}
                   </td>
 
                   {/* 24h % */}
                   <td
                     className={`px-4 py-2 text-left ${
-                      change24h >= 0 ? "text-green-400" : "text-red-400"
+                      coin.change24h >= 0 ? "text-green-400" : "text-red-400"
                     }`}
-                  >{change24h.toFixed(2)}%</td>
+                  >{coin.change24h.toFixed(2)}%</td>
 
                   {/* Sparkline */}
                   <td className="px-4 py-2 text-left text-gray-400">
-                    {coin.data.sparkline ? (
+                    {coin.sparkline ? (
                       <img
-                        src={coin.data.sparkline}
+                        src={coin.sparkline}
                         alt={`${coin.name} sparkline`}
                         className="w-24 h-6"
                       />) : ("-")}
