@@ -122,9 +122,8 @@ const CustomModal = ({ isOpen, onClose, onAdd }) => {
                 : "bg-[rgba(169,232,1,1)] hover:cursor-pointer"
             }`}
             disabled={disableAddWatchlistBtn}
-            onClick={() => onAdd(selectedCoins)} // send to parent
-          >
-            Add to Watchlist ({selectedCoins.length})
+            onClick={() => onAdd(selectedCoins)}
+          >Add to Watchlist ({selectedCoins.length})
           </button>
         </div>
       </div>

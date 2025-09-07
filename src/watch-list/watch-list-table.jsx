@@ -19,7 +19,8 @@ const WatchListTable = () => {
           </tr>
         </thead>
         <tbody className="border-t border-b border-[rgba(161,161,170,0.3)]">
-          {data.length > 0 &&
+
+          {data?.length > 0 &&
             data.map((coin, index) => {
               const price = coin?.data?.price ?? 0;
               const change24h =
@@ -52,9 +53,7 @@ const WatchListTable = () => {
                     className={`px-4 py-2 text-left ${
                       change24h >= 0 ? "text-green-400" : "text-red-400"
                     }`}
-                  >
-                    {change24h.toFixed(2)}%
-                  </td>
+                  >{change24h.toFixed(2)}%</td>
 
                   {/* Sparkline */}
                   <td className="px-4 py-2 text-left text-gray-400">
@@ -63,10 +62,7 @@ const WatchListTable = () => {
                         src={coin.data.sparkline}
                         alt={`${coin.name} sparkline`}
                         className="w-24 h-6"
-                      />
-                    ) : (
-                      "-"
-                    )}
+                      />) : ("-")}
                   </td>
 
                   {/* Holdings */}
@@ -94,15 +90,9 @@ const WatchListTable = () => {
         </span>
 
         <div className="flex justify-between items-center gap-4">
-          <span className="text-sm p-1 text-[rgba(161,161,170,1)]">
-            1 of 1 Pages
-          </span>
-          <button className="text-[rgba(161,161,170,1)] text-sm p-1">
-            Prev
-          </button>
-          <button className="text-[rgba(161,161,170,1)] text-sm p-1">
-            Next
-          </button>
+          <span className="text-sm p-1 text-[rgba(161,161,170,1)]">1 of 1 Pages</span>
+          <button className="text-[rgba(161,161,170,1)] text-sm p-1">Prev</button>
+          <button className="text-[rgba(161,161,170,1)] text-sm p-1">Next</button>
         </div>
       </div>
     </div>

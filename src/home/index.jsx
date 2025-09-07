@@ -18,11 +18,11 @@ const Home = () => {
           className="text-[rgba(169,232,1,1)]" 
         />Token Portfolio</span>
 
-        <span className='bg-[rgba(169,232,1,1)] w-[136px] h-8 rounded-2xl p-2 text-gray-950 flex justify-center items-center gap-2 text-xs font-medium'
+        <button className='bg-[rgba(169,232,1,1)] w-[136px] h-8 rounded-2xl p-2 text-gray-950 flex justify-center items-center gap-2 text-xs font-medium hover:cursor-pointer'
         ><WalletIcon 
           fontSize="small" 
           className="text-black" 
-        />Connect Wallet</span>
+        />Connect Wallet</button>
       </div>
       {/* other cards */}
       <Portfolio/>
