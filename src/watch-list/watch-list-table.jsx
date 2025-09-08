@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import HoldingsCell from "./holding-cell";
+import ActionCell from "./action-cell";
 
 const WatchListTable = () => {
+
   const data = useSelector((state) => state.watchlist.items); // get from store
-  const dispatch = useDispatch();
+
 
   return (
     <div className="flex flex-col justify-center items-start w-full h-auto border-[rgba(161,161,170,0.3)] border rounded-lg overflow-x-scroll lg:overflow-hidden">
@@ -80,8 +82,8 @@ const WatchListTable = () => {
                   </td>
 
                   {/* Actions */}
-                  <td className="px-4 py-2 text-right text-[rgba(244,244,245,1)]">
-                    <button aria-label={`More options for ${coin.name}`}>...</button>
+                  <td className="px-4 py-2 text-right justify-items-end text-[rgba(244,244,245,1)] w-[160px]">
+                    <ActionCell coin={coin}/>
                   </td>
                 </tr>
               );
