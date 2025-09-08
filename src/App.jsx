@@ -4,7 +4,7 @@ import Home from '../src/home'
 function App() {
 
   return (
-    <div className='bg-[rgba(35,35,35,1)] flex justify-center items-start w-full min-h-screen'>
+    <div className='bg-[rgba(35,35,35,1)] flex justify-center items-start min-w-fit min-h-screen'>
       <Home/>
     </div>
   )
