@@ -4,7 +4,7 @@ import { updateHoldings } from "../store/watchlistSlice";
 
 const HoldingsCell = ({ coin }) => {
   const dispatch = useDispatch();
-  const [localHoldings, setLocalHoldings] = useState(coin.holdings || "");
+  const [localHoldings, setLocalHoldings] = useState(coin.holdings || 0);
   const [dirty, setDirty] = useState(false);
 
   const handleSave = () => {
@@ -27,12 +27,12 @@ const HoldingsCell = ({ coin }) => {
           setLocalHoldings(e.target.value);
           setDirty(true);
         }}
-        className="w-20 px-2 py-1 bg-transparent border border-gray-600 rounded text-white"
+        className="w-20 px-2 py-1 bg-transparent hover:shadow-xs shadow-[rgba(169,232,1,1)] border-[rgba(169,232,1,1)] rounded text-white hover:border"
       />
       {dirty && (
         <button
           onClick={handleSave}
-          className="px-2 py-1 text-xs bg-blue-600 rounded text-white hover:bg-blue-500"
+          className="p-1.5 px-3 text-xs bg-[rgba(169,232,1,1)] rounded text-black hover:bg-[rgba(169,232,1,0.75)] font-medium hover:cursor-pointer"
         >Save</button>
       )}
     </div>

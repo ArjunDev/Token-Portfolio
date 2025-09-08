@@ -31,7 +31,7 @@ const WatchListCard = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full h-auto lg:w-[1384px]">
+    <div className="flex flex-col justify-center items-center w-full h-auto lg:max-w-[1384px]">
       <WatchListHeader onOpenModal={() => setIsOpen(true)} />
 
       <WatchListTable />

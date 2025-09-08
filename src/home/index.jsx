@@ -7,10 +7,10 @@ import TokenIcon from '@mui/icons-material/Token';
 const Home = () => {
 
   return (
-    <div className='flex flex-col items-center justify-center gap-8 max-w-[402px] lg:h-auto'>
+    <div className='flex flex-col items-center justify-center gap-8 max-w-[402px] lg:h-full lg:max-w-[1440px]'>
 
       {/* Header */}
-      <div className='w-full h-16 flex justify-between items-center gap-6 p-4 lg:w-[1440px]'>
+      <div className='w-full h-16 flex justify-between items-center gap-6 p-4'>
 
         <span className='flex justify-center items-center gap-1 text-white font-bold text-lg' 
         ><TokenIcon 

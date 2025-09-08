@@ -24,6 +24,13 @@ const watchlistSlice = createSlice({
       state.items = action.payload;
 
       saveToLocalStorage(state);
+      state.lastUpdated = new Date().toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      });
+
     },
     addToWatchlist: (state, action) => {
       state.items.push(action.payload);

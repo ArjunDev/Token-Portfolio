@@ -1,11 +1,7 @@
 import React from 'react'
 import MyPieChart from '../pie-chart';
-import { useSelector } from "react-redux";
 
 const PortfolioTotalChart = () => {
-
-  const data = useSelector((state) => state.watchlist.items || []); // get from store
-
 
   return (
 

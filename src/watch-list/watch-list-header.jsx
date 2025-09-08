@@ -4,6 +4,8 @@ import LoopIcon from "@mui/icons-material/Loop";
 import AddIcon from "@mui/icons-material/Add";
 
 const WatchListHeader = ({ onOpenModal }) => {
+
+  
   return (
     <div className="w-[370px] h-9 lg:w-full flex justify-between items-start">
       <span className="text-white font-medium flex items-center gap-1"
